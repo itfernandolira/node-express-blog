@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const connection = require("./database/database");
 
+const categoriesController = require("./categories/CategoriesController");
+const articlesController = require("./articles/ArticlesController");
+
 //database
 //CREATE database `blog` DEFAULT CHARACTER SET utf8 ;
 connection
@@ -25,6 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
+
+app.use("/",categoriesController);    
+app.use("/",articlesController);
 
 app.get("/",function(req,res){
         //res.send("Ok!");
