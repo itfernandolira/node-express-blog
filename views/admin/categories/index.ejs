@@ -23,7 +23,10 @@
                         <th><%= category.slug %></th>
                         <th>
                             <button class="btn  btn-warning">Editar</button>
-                            <button class="btn  btn-danger">Apagar</button>
+                            <form method="POST" action="/categories/delete" style="display: inline;" onsubmit="confirmarApagar(event, this)">
+                                <input type="hidden" name="id" value="<%= category.id %>">
+                                <button class="btn btn-danger">Apagar</button>
+                            </form>
                         </th>
                     </tr>
                 <% }) %>
@@ -32,3 +35,12 @@
     </div>
 </body>
 <%- include('../../partials/footer.ejs') %>
+<script>
+    function confirmarApagar(event, form){
+        event.preventDefault();
+        var decision = confirm("Deseja apagar esta categoria?");
+        if(decision){
+            form.submit();
+        }
+    }
+</script>
