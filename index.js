@@ -36,8 +36,9 @@ app.use("/",categoriesController);
 app.use("/",articlesController);
 
 app.get("/",function(req,res){
-        //res.send("Ok!");
-        res.render("index");
+    Article.findAll().then(articles => {
+        res.render("index", {articles: articles});
+    });
 });
 
 app.listen(4000,()=>{console.log("Servidor ativo!");});
