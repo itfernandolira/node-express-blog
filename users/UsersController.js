@@ -33,4 +33,10 @@ router.post("/users/save", (req, res) => {
     });
 });
 
+router.get("/admin/users", (req, res) => {
+    User.findAll().then(users => {
+        res.render("admin/users/index",{users: users});
+    });
+});
+
 module.exports = router;
