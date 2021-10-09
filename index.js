@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const connection = require("./database/database");
+const session = require("express-session");
 
 const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/ArticlesController");
@@ -24,6 +25,15 @@ connection
 // Instrução para o Express usar o EJS como View engine
 app.set('view engine','ejs');
 
+//Express-session
+app.use(session({
+    secret: "qualquercoisa", 
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 30000 }
+}))
+
+
 app.use(express.static('public'));
 
 // Body parser
@@ -37,6 +47,21 @@ app.use(express.urlencoded({
 app.use("/",categoriesController);    
 app.use("/",articlesController);
 app.use("/",usersController);
+
+app.get("/session",function(req,res){
+    req.session.nome="Fernando";
+    req.session.ano="1974";
+    req.session.user= {
+        username: "flira",
+        email:"it.fernandolira@gmail.com",
+        id:5
+    }
+    res.send("Ok");
+});
+
+app.get("/leitura",function(req,res){
+    res.json({nome: req.session});
+});
 
 app.get("/",function(req,res){
     Article.findAll().then(articles => {
