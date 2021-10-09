@@ -19,6 +19,7 @@ const Article = connection.define('articles',{
 /* Category.hasMany(Category, {
     foreignKey: 'categoryId'
   }); */ // UMA Categoria tem muitos artigos
+Category.hasMany(Article);
 Article.belongsTo(Category); // UM Artigo pertence a uma categoria
 
 //Article.sync({force: true});
